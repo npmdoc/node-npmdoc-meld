@@ -1,0 +1,412 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="http://cujojs.com"
+
+    >meld (v1.3.2)</a>
+</h1>
+<h4>AOP for JS with before, around, on, afterReturning, afterThrowing, after advice, and pointcut support</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.meld">module meld</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.meld.meld">
+            function <span class="apidocSignatureSpan"></span>meld
+            <span class="apidocSignatureSpan">(target, pointcut, aspect)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.meld.add">
+            function <span class="apidocSignatureSpan">meld.</span>add
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.meld.after">
+            function <span class="apidocSignatureSpan">meld.</span>after
+            <span class="apidocSignatureSpan">(target, method, adviceFunc)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.meld.afterReturning">
+            function <span class="apidocSignatureSpan">meld.</span>afterReturning
+            <span class="apidocSignatureSpan">(target, method, adviceFunc)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.meld.afterThrowing">
+            function <span class="apidocSignatureSpan">meld.</span>afterThrowing
+            <span class="apidocSignatureSpan">(target, method, adviceFunc)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.meld.around">
+            function <span class="apidocSignatureSpan">meld.</span>around
+            <span class="apidocSignatureSpan">(target, method, adviceFunc)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.meld.before">
+            function <span class="apidocSignatureSpan">meld.</span>before
+            <span class="apidocSignatureSpan">(target, method, adviceFunc)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.meld.joinpoint">
+            function <span class="apidocSignatureSpan">meld.</span>joinpoint
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.meld.on">
+            function <span class="apidocSignatureSpan">meld.</span>on
+            <span class="apidocSignatureSpan">(target, method, adviceFunc)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.meld" id="apidoc.module.meld">module meld</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.meld.meld" id="apidoc.element.meld.meld">
+        function <span class="apidocSignatureSpan"></span>meld
+        <span class="apidocSignatureSpan">(target, pointcut, aspect)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function meld(target, pointcut, aspect) {
+		var pointcutType, remove;
+
+		if(arguments.length &#x3c; 3) {
+			return addAspectToFunction(target, pointcut);
+		} else {
+			if (isArray(pointcut)) {
+				remove = addAspectToAll(target, pointcut, aspect);
+			} else {
+				pointcutType = typeof pointcut;
+
+				if (pointcutType === &#x27;string&#x27;) {
+					if (typeof target[pointcut] === &#x27;function&#x27;) {
+						remove = addAspectToMethod(target, pointcut, aspect);
+					}
+
+				} else if (pointcutType === &#x27;function&#x27;) {
+					remove = addAspectToAll(target, pointcut(target), aspect);
+
+				} else {
+					remove = addAspectToMatches(target, pointcut, aspect);
+				}
+			}
+
+			return remove;
+		}
+
+	}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.meld.add" id="apidoc.element.meld.add">
+        function <span class="apidocSignatureSpan">meld.</span>add
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">add = function () { return meld.apply(null, arguments); }</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+`buster test`
+
+# What&#x27;s New
+
+### 1.3.0
+
+* [`meld()`](docs/api.md#adding-aspects) is now a function that adds aspects.
+	* **DEPRECATED:** `meld.<span class="apidocCodeKeywordSpan">add</span>()`.  Use `meld()` instead.
+
+### 1.2.2
+
+* Remove stray `console.log`.
+
+### 1.2.1
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.meld.after" id="apidoc.element.meld.after">
+        function <span class="apidocSignatureSpan">meld.</span>after
+        <span class="apidocSignatureSpan">(target, method, adviceFunc)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">after = function (target, method, adviceFunc) {
+			var aspect = {};
+
+			if(arguments.length === 2) {
+				aspect[type] = method;
+				return meld(target, aspect);
+			} else {
+				aspect[type] = adviceFunc;
+				return meld(target, method, aspect);
+			}
+		}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+var myObject = {
+	doSomething: function(a, b) {
+		return a + b;
+	}
+};
+
+// Call a function after myObject.doSomething returns
+var remover = meld.<span class="apidocCodeKeywordSpan">after</span>(myObject, &#x27;doSomething&#x27;, function(result) {
+	console.log(&#x27;myObject.doSomething returned: &#x27; + result);
+});
+
+myObject.doSomething(1, 2); // Logs: &#x22;myObject.doSomething returned: 3&#x22;
+
+remover.remove();
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.meld.afterReturning" id="apidoc.element.meld.afterReturning">
+        function <span class="apidocSignatureSpan">meld.</span>afterReturning
+        <span class="apidocSignatureSpan">(target, method, adviceFunc)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">afterReturning = function (target, method, adviceFunc) {
+			var aspect = {};
+
+			if(arguments.length === 2) {
+				aspect[type] = method;
+				return meld(target, aspect);
+			} else {
+				aspect[type] = adviceFunc;
+				return meld(target, method, aspect);
+			}
+		}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.meld.afterThrowing" id="apidoc.element.meld.afterThrowing">
+        function <span class="apidocSignatureSpan">meld.</span>afterThrowing
+        <span class="apidocSignatureSpan">(target, method, adviceFunc)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">afterThrowing = function (target, method, adviceFunc) {
+			var aspect = {};
+
+			if(arguments.length === 2) {
+				aspect[type] = method;
+				return meld(target, aspect);
+			} else {
+				aspect[type] = adviceFunc;
+				return meld(target, method, aspect);
+			}
+		}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.meld.around" id="apidoc.element.meld.around">
+        function <span class="apidocSignatureSpan">meld.</span>around
+        <span class="apidocSignatureSpan">(target, method, adviceFunc)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">around = function (target, method, adviceFunc) {
+			var aspect = {};
+
+			if(arguments.length === 2) {
+				aspect[type] = method;
+				return meld(target, aspect);
+			} else {
+				aspect[type] = adviceFunc;
+				return meld(target, method, aspect);
+			}
+		}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.meld.before" id="apidoc.element.meld.before">
+        function <span class="apidocSignatureSpan">meld.</span>before
+        <span class="apidocSignatureSpan">(target, method, adviceFunc)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">before = function (target, method, adviceFunc) {
+			var aspect = {};
+
+			if(arguments.length === 2) {
+				aspect[type] = method;
+				return meld(target, aspect);
+			} else {
+				aspect[type] = adviceFunc;
+				return meld(target, method, aspect);
+			}
+		}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.meld.joinpoint" id="apidoc.element.meld.joinpoint">
+        function <span class="apidocSignatureSpan">meld.</span>joinpoint
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function joinpoint() {
+		return currentJoinpoint;
+	}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+### 1.2.1
+
+* Fix for IE8-specific issue with meld&#x27;s internal use of `Object.defineProperty`.
+* Internally shim Object.create if not available to so that meld no longer requires an Object.create shim to advise constructors
+ in pre-ES5 environments.
+
+### 1.2.0
+
+* `meld.<span class="apidocCodeKeywordSpan">joinpoint</span>()` - [Access the current joinpoint](docs/api.md#meldjoinpoint) from
+ any advice type.
+* [Bundled aspects](docs/aspects.md):
+	* trace: trace method call entry/return/throw
+	* memoize: simple memoization for methods and functions
+	* cache: configurable caching aspect to do more than simple memoization
+
+### 1.1.0
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.meld.on" id="apidoc.element.meld.on">
+        function <span class="apidocSignatureSpan">meld.</span>on
+        <span class="apidocSignatureSpan">(target, method, adviceFunc)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">on = function (target, method, adviceFunc) {
+			var aspect = {};
+
+			if(arguments.length === 2) {
+				aspect[type] = method;
+				return meld(target, aspect);
+			} else {
+				aspect[type] = adviceFunc;
+				return meld(target, method, aspect);
+			}
+		}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
